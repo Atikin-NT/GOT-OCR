@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G

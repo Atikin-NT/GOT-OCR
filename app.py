@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 from transformers import AutoProcessor, AutoModelForImageTextToText
 import torch
+import json
 
 st.set_page_config(page_title="GOT-OCR Demo", page_icon="📄")
 
@@ -29,6 +30,10 @@ def process_image(image: Image.Image, model, processor) -> str:
     )
     return processor.decode(generate_ids[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True)
 
+def load_expected() -> str:
+    with open("sample_images/sample.json", "r") as f:
+        return json.load(f)["expected_output"]
+
 st.title("GOT-OCR 2.0")
 
 tab1, tab2 = st.tabs(["Demo", "Upload"])
@@ -46,9 +51,18 @@ with tab1:
         st.subheader("Result:")
         st.markdown(result)
 
+        expected = load_expected()
         st.markdown("---")
         st.subheader("Expected Output:")
-        st.text("R&D QUALITY IMPROVEMENT\nSUGGESTION/SOLUTION FORM\nName/Phone Ext.: (...)")
+        st.text(expected)
+
+        result_normalized = " ".join(result.split())
+        expected_normalized = " ".join(expected.split())
+
+        if result_normalized == expected_normalized:
+            st.success("Test PASSED - Result matches expected output!")
+        else:
+            st.error(f"Test FAILED - Result does not match expected output")
 
 with tab2:
     st.header("Upload Image")
