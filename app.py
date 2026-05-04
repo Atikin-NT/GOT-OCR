@@ -7,7 +7,7 @@ import json
 
 st.set_page_config(page_title="GOT-OCR Demo", page_icon="📄")
 
-HF_TOKEN = "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"
+HF_TOKEN = "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"
 
 login(token=HF_TOKEN)
 
