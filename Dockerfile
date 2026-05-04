@@ -14,7 +14,6 @@ COPY app.py .
 COPY sample_images/ ./sample_images/
 
 ENV TRANSFORMERS_CACHE=/app/model_cache
-ENV HF_TOKEN=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
 
 EXPOSE 8501
 

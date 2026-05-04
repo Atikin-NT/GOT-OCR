@@ -1,12 +1,15 @@
 import streamlit as st
 from PIL import Image
 from transformers import AutoProcessor, AutoModelForImageTextToText
+from huggingface_hub import login
 import torch
 import json
 
 st.set_page_config(page_title="GOT-OCR Demo", page_icon="📄")
 
 HF_TOKEN = "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"
+
+login(token=HF_TOKEN)
 
 @st.cache_resource
 def load_model():
